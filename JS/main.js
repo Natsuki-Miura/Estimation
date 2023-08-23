@@ -42,8 +42,13 @@ for (let i = 0; i < textGroup.length; i++) {
                             itemCheckbox.type = "checkbox";
                             itemCheckbox.name = "itemCheckbox"
                             itemCheckbox.id = "itemCheckbox" + k;
-                            itemLabel.appendChild(itemCheckbox);
-                            
+
+                            // itemCheckbox.onchange = function () {
+                            //     mins.push(textGroup[i][j][k][3]);
+                            //     console.log('発火')
+                            // };
+
+                            itemLabel.appendChild(itemCheckbox);                            
                         };
                     },
                     { once: true }
@@ -55,8 +60,18 @@ for (let i = 0; i < textGroup.length; i++) {
     );
 };
 
+
+
 // 合計の所要時間を表示
 
+// let mins = [];
+// const sumMins = mins.reduce(function(sum, min){
+//         return sum + min;
+//     },0); 
+
+
+
 let total = 0;
+
 const minTotal = document.getElementById('min-total');
 minTotal.textContent = total + '分';
