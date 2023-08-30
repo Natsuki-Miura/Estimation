@@ -23,7 +23,7 @@ for (let i = 0; i < textGroup.length; i++) {
                 middleItem.textContent = textGroup[i][j][0][1];
                 largeItem.appendChild(middleItem);
 
-                // 中項目をクリックで小項目を表示
+                // 中項目をクリックで小項目と所要時間を表示
                 middleItem.addEventListener(
                     'click',
                     function () {
@@ -40,20 +40,14 @@ for (let i = 0; i < textGroup.length; i++) {
 
                             const itemCheckbox = document.createElement("input")
                             itemCheckbox.type = "checkbox";
-                            itemCheckbox.name = "itemCheckbox"
-                            itemCheckbox.id = "itemCheckbox" + k;
-
-                            // itemCheckbox.onchange = function () {
-                            //     mins.push(textGroup[i][j][k][3]);
-                            //     console.log('発火')
-                            // };
-
-                            itemLabel.appendChild(itemCheckbox);                            
+                            itemCheckbox.name = "itemCheckbox";
+                            itemCheckbox.id = "itemCheckbox" + i + j + k;
+                            itemCheckbox.onchange = totalCalc.bind(null, itemCheckbox.id, textGroup[i][j][k][3]);
+                            itemLabel.appendChild(itemCheckbox);
                         };
                     },
                     { once: true }
                 );
-
             };
         },
         { once: true }
@@ -62,16 +56,29 @@ for (let i = 0; i < textGroup.length; i++) {
 
 
 
-// 合計の所要時間を表示
 
-// let mins = [];
-// const sumMins = mins.reduce(function(sum, min){
-//         return sum + min;
-//     },0); 
-
-
+// 合計の所要時間（total）を計算する
 
 let total = 0;
 
+
+// 合計所要時間を表示。初期値は0
 const minTotal = document.getElementById('min-total');
 minTotal.textContent = total + '分';
+
+
+
+// チェックボックスのイベントハンドラで関数totalCalcをコール
+// idにはチェックボックスのid、minには所要時間が渡ってくる
+
+function totalCalc(id, min) {
+    const itemCheckbox = document.getElementById(id)
+        if (itemCheckbox.checked) {
+            total = total + min;
+        } else {
+            total = total - min;
+        }
+
+    // totalの値が更新されたタイミングで合計所要時間の表示も更新
+    minTotal.textContent = total + '分';
+}
